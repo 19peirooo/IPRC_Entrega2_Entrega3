@@ -30,11 +30,11 @@ plt.plot(x,T2, label = "Pulso Chorro")
 plt.legend()
 plt.show()
     
-T = T_0 + T1 - T2
+T = T_0 + T1 + T2
 for step in range (num_steps):
     T = T + alpha * np.gradient(np.gradient(T,dx), dx) * dt
 
-plt.plot(x,T_0 + T1 - T2, label = "T(x,0)")
+plt.plot(x,T_0 + T1 + T2, label = "T(x,0)")
 plt.plot(x,T, label = "T(x,final)")
 
 plt.title("Distribucion de Calor en la Barra para un T0 = {:d}K".format(T_0))
