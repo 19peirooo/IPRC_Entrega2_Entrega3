@@ -39,12 +39,11 @@ v2 = solucion[:, 3]  # Velocidad de la masa 2
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.set_xlim(tini, tfin)  # Rango para el tiempo
 ax.set_ylim(-6, 6)  # Rango para las posiciones
-ax.set_title("Osciladores Acoplados: Curvas x1(t) y x2(t)", fontsize=14)
-ax.set_xlabel("Tiempo (s)")
-ax.set_ylabel("Posición (m)")
+ax.set_title("Osciladores Acoplados: Curvas")
 
-line1, = ax.plot([], [], 'b-', label="Masa 1: x1(t)")
-line2, = ax.plot([], [], 'r-', label="Masa 2: x2(t)")
+
+line1, = ax.plot([], [], 'b-', label="Masa 1")
+line2, = ax.plot([], [], 'r-', label="Masa 2")
 ax.legend()
 
 def init():
@@ -63,8 +62,23 @@ def update_velocidad(frame):
     line2.set_data(t[:frame], v2[:frame])
     return line1, line2,
 
+def update_lissajous(frame):
+    line1.set_data(x1[:frame], x2[:frame])
+    return line1,
+
 funcion = update_posicion
 #funcion = update_velocidad
+#funcion = update_lissajous
+
+if funcion == update_posicion:
+    ax.set_xlabel("Tiempo (s)")
+    ax.set_ylabel("Posición (m)")
+elif funcion == update_velocidad:
+    ax.set_xlabel("Tiempo (s)")
+    ax.set_ylabel("Velocidad (m/s)")
+else:
+    ax.set_xlabel("Posicion x1 (m)")
+    ax.set_ylabel("Posición x2 (m)")
 
 ani = animation.FuncAnimation(fig, funcion, frames=len(t), init_func=init, blit=True, interval=20)
 
